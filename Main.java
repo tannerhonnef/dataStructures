@@ -1,79 +1,184 @@
-import java.text.DecimalFormat;
-import java.util.*;
-import static java.lang.Math.floor;
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import javax.swing.JPanel;
 
-public class Main {
-    private static final DecimalFormat wholefor = new DecimalFormat("0");
-    public static void main(String[] args) {
-        // assigns each variable to a double format
-        double amount;
-        double dollars;
-        double remainder;
-        double quarters;
-        double dimes;
-        double nickels;
-        double pennies;
-        double hundreddollars;
-        double fiftydollars;
-        double twentydollars;
-        double tendollars;
-        double fivedollars;
 
-        // uses scanner to get the input amount to convert
-        Scanner sc = new Scanner(System.in);
-        System.out.print("Enter the amount: ");
-        amount = sc.nextDouble();
+    public class Main {
 
-        // checks to see how many hundred dollar bills there are
-        hundreddollars = amount / 100;
-        // returns the remainder after dividing by 100 and is stored in the variable "remainder"
-        remainder = amount % 100;
-        //prints "Hundred Dollar Bills: " followed by the amount of them
-        System.out.println("Hundred Dollar Bills: " + wholefor.format(floor(hundreddollars)));
+        public static void main(String[] args) {
+            Main Main = new Main();
+            Main.showToppings();
+        }
 
-        // FIFTY DOLLAR BILLS
-        fiftydollars = remainder / 50;
-        remainder = remainder % 50;
-        System.out.println("Fifty Dollar Bills: " + wholefor.format(floor(fiftydollars)));
+        //class to hold the price with a setter and a getter
+        class PriceHandler{
+            public double price;
+            public PriceHandler(double price){
+                this.price = price;
+            }
+            public double getPrice() {
+                return price;
+            }
+            public void setPrice(double price) {
+                this.price = price;
+            }
+        }
+        public void showToppings() {
+            // instance of the pricehandler for the class
+            PriceHandler priceHandler = new PriceHandler(0);
 
-        // TWENTY DOLLAR BILLS
-        twentydollars = remainder / 20;
-        remainder = remainder % 20;
-        System.out.println("Twenty Dollar Bills: " + wholefor.format(floor(twentydollars)));
+            // setting up the JFrame and layout
+            JFrame f = new JFrame("Big Y Pizza Shop");
+            f.setLayout(new FlowLayout());
+            f.setSize(400, 500);
+            f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            JLabel title = new JLabel("Welcome to the BigY Pizza Shop!");
+            title.setFont(new Font("Helvetica", Font.BOLD, 24));
+            f.add(title);
 
-        // TEN DOLLAR BILLS
-        tendollars = remainder / 10;
-        remainder = remainder % 10;
-        System.out.println("Ten Dollar Bills: " + wholefor.format(floor(tendollars)));
+            // creating the buttons to select pizza size and adding action listeners for setting the prices
+            JLabel heading = new JLabel("Select your pizza size: ");
+            heading.setFont(new Font("Helvetica", Font.BOLD, 20));
+            f.add(heading);
+            JButton small = new JButton("Small $5");
+            small.addActionListener(e -> priceHandler.setPrice(5));
+            JButton medium = new JButton("Medium $10");
+            medium.addActionListener(e -> priceHandler.setPrice(10));
+            JButton large = new JButton("Large $15");
+            large.addActionListener(e -> priceHandler.setPrice(15));
+            JButton xl = new JButton("Super $20");
+            xl.addActionListener(e -> priceHandler.setPrice(20));
 
-        // FIVE DOLLAR BILLS
-        fivedollars = remainder / 5;
-        remainder = remainder % 5;
-        System.out.println("Five Dollar Bills: " + wholefor.format(floor(fivedollars)));
+            // adding the buttons to the JFrame
+            f.add(small);
+            f.add(medium);
+            f.add(large);
+            f.add(xl);
 
-        // ONE DOLLAR BILLS
-        dollars = remainder / 1;
-        remainder = remainder % 1;
-        System.out.println("One Dollar Bills: " + wholefor.format(floor(dollars)));
+            // adding subheading select your toppings and adding prices for the various toppings
+            JLabel subheading = new JLabel("Select your toppings: ");
+            subheading.setFont(new Font("Helvetica", Font.BOLD, 16));
+            JLabel toppingDescription = new JLabel("1 topping = $0.50   2 toppings = $1.00   3 toppings = $1.25");
 
-        // QUARTERS
-        quarters = remainder / 0.25;
-        remainder =  remainder % 0.25;
-        System.out.println("Quarters: " + wholefor.format(floor(quarters)));
+            // adding the subheading with the "select your toppings" text and the description to the JFrame
+            f.add(subheading);
+            f.add(toppingDescription);
 
-        // DIMES
-        dimes = remainder / 0.10;
-        remainder =  remainder % 0.10;
-        System.out.println("Dimes: " + wholefor.format(floor(dimes)));
+            // creation of the checkboxes for toppings
+            JLabel label = new JLabel("Topping Options (max of 3)");
+            JCheckBox k = new JCheckBox("Extra Cheese (no cost)");
+            JCheckBox a = new JCheckBox("Mushrooms");
+            JCheckBox b = new JCheckBox("Pepperoni");
+            JCheckBox c = new JCheckBox("Sausage");
+            JCheckBox d = new JCheckBox("Pineapple");
+            JCheckBox e = new JCheckBox("Onions");
+            JCheckBox g = new JCheckBox("Olives");
+            JCheckBox h = new JCheckBox("Bacon");
+            JCheckBox i = new JCheckBox("Peppers");
+            JCheckBox j = new JCheckBox("Spinach");
 
-        // NICKELS
-        nickels = remainder / 0.05;
-        remainder =  remainder % 0.05;
-        System.out.println("Nickels: " + wholefor.format(floor(nickels)));
+            // creation of a vertical box which all the toppings are put into then put into a JScrollPane
+            Box box = Box.createVerticalBox();
 
-        // PENNIES
-        pennies = remainder / 0.01;
-        System.out.println("Pennies: " + wholefor.format(floor(pennies)));
-    sc.close();
+            // adding the checkboxes to the vertical box
+            box.add(label);
+            box.add(k);
+            box.add(a);
+            box.add(b);
+            box.add(c);
+            box.add(d);
+            box.add(e);
+            box.add(g);
+            box.add(h);
+            box.add(i);
+            box.add(j);
+
+            // creation and addition of the Jscrollpane to the GUI
+            JScrollPane jscrlpBox = new JScrollPane(box);
+            jscrlpBox.setPreferredSize(new Dimension(275, 200));
+            f.add(jscrlpBox);
+
+            // setting the cost for each additional topping
+            double topping1 = 0.50;
+            double topping2 = 0.50;
+            double topping3 = 0.25;
+
+            // creating a variable to keep track of the number of toppings
+            int[] selectedToppings = {0};
+
+            // adjusting the number of selected toppings based on the number of boxes checked
+            ItemListener itemListener = e12 -> {
+                if (e12.getStateChange() == ItemEvent.SELECTED) {
+                    selectedToppings[0]++;
+                } else if (e12.getStateChange() == ItemEvent.DESELECTED) {
+                    selectedToppings[0]--;
+                }
+
+                // updating the pricehandler with the number of selected toppings when toppings are added or removed
+                double totalPrice = priceHandler.getPrice();
+                if (selectedToppings[0] == 1) {
+                    totalPrice += topping1;
+                } else if (selectedToppings[0] == 2) {
+                    totalPrice += topping2;
+                } else if (selectedToppings[0] == 3) {
+                    totalPrice += topping3;
+                }
+                priceHandler.setPrice(totalPrice);
+
+            };
+
+            // adding the itemListener method to each of the checkboxes
+            a.addItemListener(itemListener);
+            b.addItemListener(itemListener);
+            c.addItemListener(itemListener);
+            d.addItemListener(itemListener);
+            e.addItemListener(itemListener);
+            g.addItemListener(itemListener);
+            h.addItemListener(itemListener);
+            i.addItemListener(itemListener);
+            j.addItemListener(itemListener);
+
+            // addition of "complete my order button" at the bottom
+            JButton complete = new JButton("Complete my order");
+            f.add(complete);
+
+
+            // action listener for complete my order button
+            complete.addActionListener(e1 -> {
+                // setting up JFrame with the total cost menu
+                JFrame costFrame = new JFrame("Total Cost");
+                costFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                JPanel costPanel = new JPanel();
+                costPanel.setLayout(new FlowLayout());
+                // calling the priceHandler to get the subtotal
+                double subtotal = priceHandler.getPrice();
+                // creating a variable for the sales tax in Massachusetts
+                double tax = 0.0625;
+                // creating a variable which is the amount of tax
+                double taxAmount = tax * subtotal;
+                // displaying the math calculating the tax
+                JLabel showTax = new JLabel("Cost " + subtotal + " * " + "Tax 6.25% = $" + taxAmount);
+                // variable with the total price calculated by adding the subtotal and taxAmount together
+                double totalPrice = subtotal + taxAmount;
+                // displaying the total cost variable
+                JLabel total = new JLabel("Total Cost: $" + totalPrice);
+                // setting the fonts of the text in the GUI
+                total.setFont(new Font("Helvetica", Font.BOLD, 20));
+                showTax.setFont(new Font("Helvetica", Font.BOLD, 20));
+                costPanel.setFont(new Font("Helvetica", Font.BOLD, 20));
+                // adding the elements to the GUI
+                costPanel.add(showTax);
+                costPanel.add(total);
+                costFrame.add(costPanel);
+                // setting the size of the GUI
+                costFrame.setSize(300, 200);
+                costFrame.setVisible(true);
+
+
+            });
+            f.setVisible(true);
         }
     }
